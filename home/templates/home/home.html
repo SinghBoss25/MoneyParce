@@ -1,1 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MoneyParce - Personal Finance Tracker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f9f9f9;
+        }
+        header {
+            background-color: #1e3a8a;
+            color: white;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+        nav a {
+            color: white;
+            margin-left: 20px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .hero {
+            padding: 80px 40px;
+            text-align: center;
+            background: linear-gradient(to right, #3b82f6, #60a5fa);
+            color: white;
+        }
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        .hero a {
+            background-color: white;
+            color: #3b82f6;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 60px 40px;
+            justify-content: space-around;
+            background-color: #ffffff;
+        }
+        .feature {
+            max-width: 300px;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f1f5f9;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .feature h3 {
+            margin-top: 0;
+            color: #1e3a8a;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #1e3a8a;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>MoneyParce</h1>
+        <nav>
+            <a href="/login/">Login</a>
+            <a href="/register/">Register</a>
+        </nav>
+    </header>
 
+    <section class="hero">
+        <h2>Take Control of Your Financial Future</h2>
+        <p>Track your spending, set smart budgets, and reach your goals — all in one place.</p>
+        <a href="/register/">Get Started</a>
+    </section>
+
+    <section class="features">
+        <div class="feature">
+            <h3>Track Your Expenses</h3>
+            <p>Automatically or manually log transactions and keep tabs on your spending.</p>
+        </div>
+        <div class="feature">
+            <h3>Visualize Your Money</h3>
+            <p>Interactive charts and reports help you understand where your money goes.</p>
+        </div>
+        <div class="feature">
+            <h3>Stay on Budget</h3>
+            <p>Set budgets by category and get notified when you approach your limit.</p>
+        </div>
+        <div class="feature">
+            <h3>Sync Bank Accounts</h3>
+            <p>Securely connect with major banks for real-time financial tracking.</p>
+        </div>
+        <div class="feature">
+            <h3>Personalized Tips</h3>
+            <p>AI-driven recommendations help you build better financial habits.</p>
+        </div>
+    </section>
+
+    <footer>
+        &copy; 2025 MoneyParce. All rights reserved.
+    </footer>
+</body>
+</html>
