@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 def index(request):
     return render(request, 'home/index.html')
 def about(request):
-    return render(request, 'home/about.html')
+    return render(request, 'about.html')
 def get_started_redirect(request):
     if request.user.is_authenticated:
         return redirect('home.index')
