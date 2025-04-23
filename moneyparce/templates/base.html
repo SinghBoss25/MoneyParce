@@ -131,21 +131,51 @@
         }
     </style>
 </head>
+<script>
+    function toggleDropdown() {
+    const menu = document.getElementById("dropdown-menu");
+    menu.style.display = menu.style.display === "block" ? "none" : "block";
+    }
+
+    document.addEventListener('click', function(event) {
+        const dropdown = document.getElementById("dropdown-menu");
+        const button = event.target.closest("button");
+        if (!button && !dropdown.contains(event.target)) {
+            dropdown.style.display = "none";
+        }
+    });
+</script>
+
 <body>
 
     <header>
-        <h1>MoneyParce</h1>
-        <nav>
-            <a href="/">Home</a>
-            <a href="/about/">About</a>
-            {% if user.is_authenticated %}
-            <a class="nav-link" href="{% url 'accounts.logout' %}">Logout ({{ user.username }})</a>
-            {% else %}
-            <a class="nav-link" href="{% url 'accounts.login' %}">Login</a>
-            <a class="nav-link" href="{% url 'accounts.signup' %}">Sign Up</a>
-            {% endif %}
-        </nav>
-    </header>
+    <div style="display: flex; align-items: center;">
+        <h1 style="margin-right: 20px;">MoneyParce</h1>
+
+        {% if user.is_authenticated %}
+        <div style="position: relative;">
+            <button onclick="toggleDropdown()" style="background: none; border: none; color: white; font-weight: 500; cursor: pointer; font-size: 1rem;">
+                Menu ▾
+            </button>
+            <div id="dropdown-menu" style="display: none; position: absolute; background-color: white; min-width: 160px; box-shadow: 0 8px 16px rgba(0,0,0,0.2); z-index: 1000; border-radius: 8px; overflow: hidden;">
+                <a href="{% url 'transactions:list' %}" style="display: block; padding: 12px 16px; text-decoration: none; color: var(--text-color); font-weight: 500;">Transactions</a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="/about/">About</a>
+        {% if user.is_authenticated %}
+        <a class="nav-link" href="{% url 'accounts.logout' %}">Logout ({{ user.username }})</a>
+        {% else %}
+        <a class="nav-link" href="{% url 'accounts.login' %}">Login</a>
+        <a class="nav-link" href="{% url 'accounts.signup' %}">Sign Up</a>
+        {% endif %}
+    </nav>
+</header>
+
 
     <main>
         {% block content %}
