@@ -1,19 +1,43 @@
-<h2>Your Transactions</h2>
-<a href="{% url 'transactions:add' %}">+ Add Transaction</a>
+{% extends "base.html" %}
 
-<ul>
-    {% for transaction in transactions %}
-        <li>
-            {{ transaction.date }} |
-            {{ transaction.category.name }} |
-            {% if transaction.type == 'expense' %}
-                <span style="color: red;">-${{ transaction.amount }}</span>
-            {% else %}
-                <span style="color: green;">+${{ transaction.amount }}</span>
-            {% endif %}
-        </li>
-    {% empty %}
-        <li>No transactions yet.</li>
-    {% endfor %}
-</ul>
+{% block title %}Your Transactions - MoneyParce{% endblock %}
+
+{% block content %}
+<h2>Your Transactions</h2>
+<a href="{% url 'transactions:add' %}" style="display:inline-block; margin: 20px 0; background-color: var(--accent-color); color: white; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: 600;">+ Add Transaction</a>
+
+{% if transactions %}
+    <table style="width: 100%; border-collapse: collapse; background-color: white; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06); border-radius: 12px; overflow: hidden;">
+        <thead style="background-color: var(--primary-color); color: white;">
+            <tr>
+                <th style="padding: 12px 16px; text-align: left;">Date</th>
+                <th style="padding: 12px 16px; text-align: left;">Category</th>
+                <th style="padding: 12px 16px; text-align: left;">Type</th>
+                <th style="padding: 12px 16px; text-align: right;">Amount</th>
+                <th style="padding: 12px 16px; text-align: left;">Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transaction in transactions %}
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+                <td style="padding: 12px 16px;">{{ transaction.date }}</td>
+                <td style="padding: 12px 16px;">{{ transaction.category.name }}</td>
+                <td style="padding: 12px 16px;">{{ transaction.type|capfirst }}</td>
+                <td style="padding: 12px 16px; text-align: right; color: {% if transaction.type == 'expense' %}crimson{% else %}green{% endif %}; font-weight: 600;">
+                    {% if transaction.type == 'expense' %}
+                        -${{ transaction.amount }}
+                    {% else %}
+                        +${{ transaction.amount }}
+                    {% endif %}
+                </td>
+                <td style="padding: 12px 16px;">{{ transaction.description }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No transactions yet.</p>
+{% endif %}
+{% endblock %}
+
 

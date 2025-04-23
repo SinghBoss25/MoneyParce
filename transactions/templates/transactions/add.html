@@ -1,7 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Add a Transaction - MoneyParce{% endblock %}
+
+{% block content %}
 <h2>Add a Transaction</h2>
 <form method="post" id="transaction-form">
     {% csrf_token %}
-    {{ form.as_p }}
+    <div class="form-group">
+        {{ form.as_p }}
+    </div>
     <button type="submit">Save</button>
 </form>
 
@@ -18,3 +25,29 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
+<style>
+/* Increase space between form fields */
+form .form-group {
+    margin-bottom: 20px;  /* Adds space between fields */
+}
+
+form .form-group p {
+    margin-bottom: 10px;  /* Adds space below each label/input pair */
+}
+
+form button {
+    margin-top: 20px;  /* Adds space above the submit button */
+    padding: 10px 20px;  /* Add some padding to the button for a better look */
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #2563eb;
+}
+</style>
+{% endblock %}

@@ -3,7 +3,7 @@ from .forms import TransactionForm
 from .models import Transaction
 
 def transactions_list(request):
-    transactions = Transaction.objects.filter(user=request.user)
+    transactions = Transaction.objects.filter(user=request.user).order_by('-date', '-id')
     return render(request, 'transactions/list.html', {'transactions': transactions})
 
 def add_transaction(request):

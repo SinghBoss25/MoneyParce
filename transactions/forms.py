@@ -4,7 +4,7 @@ from .models import Transaction, Category
 class TransactionForm(forms.ModelForm):
     class Meta:
         model = Transaction
-        fields = ['type','amount', 'category']
+        fields = ['type','amount', 'category', 'description']
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
