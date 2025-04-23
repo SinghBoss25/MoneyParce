@@ -1,0 +1,20 @@
+<h2>Add a Transaction</h2>
+<form method="post" id="transaction-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+</form>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const typeRadios = document.querySelectorAll('input[name="type"]');
+    const form = document.getElementById('transaction-form');
+
+    typeRadios.forEach(radio => {
+        radio.addEventListener('change', () => {
+            form.submit();  // auto-submit when user changes income/expense
+        });
+    });
+});
+</script>
+

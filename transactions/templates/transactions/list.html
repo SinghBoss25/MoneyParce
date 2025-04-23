@@ -1,0 +1,19 @@
+<h2>Your Transactions</h2>
+<a href="{% url 'transactions:add' %}">+ Add Transaction</a>
+
+<ul>
+    {% for transaction in transactions %}
+        <li>
+            {{ transaction.date }} |
+            {{ transaction.category.name }} |
+            {% if transaction.type == 'expense' %}
+                <span style="color: red;">-${{ transaction.amount }}</span>
+            {% else %}
+                <span style="color: green;">+${{ transaction.amount }}</span>
+            {% endif %}
+        </li>
+    {% empty %}
+        <li>No transactions yet.</li>
+    {% endfor %}
+</ul>
+

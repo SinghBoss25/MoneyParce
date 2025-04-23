@@ -1,6 +1,9 @@
 from django.urls import path
 from . import views
 
+app_name = 'transactions'
+
 urlpatterns = [
-    path('transactions/', views.transactions_view, name='transactions'),
+    path('', views.transactions_list, name='list'),
+    path('add/', views.add_transaction, name='add'),
 ]
