@@ -29,3 +29,7 @@ def add_transaction(request, transaction_id=None):
         'form': form,
         'transaction': transaction
     })
+def delete_transaction(request, transaction_id):
+    transaction = get_object_or_404(Transaction, id=transaction_id)
+    transaction.delete()
+    return redirect('transactions:list')
