@@ -1,15 +1,35 @@
 {% extends "base.html" %}
 
-{% block title %}Add a Transaction - MoneyParce{% endblock %}
+{% block title %}
+    {% if transaction %}
+        Edit Transaction - MoneyParce
+    {% else %}
+        Add a Transaction - MoneyParce
+    {% endif %}
+{% endblock %}
 
 {% block content %}
-<h2>Add a Transaction</h2>
+<h2>
+    {% if transaction %}
+        Edit Transaction
+    {% else %}
+        Add a Transaction
+    {% endif %}
+</h2>
+
 <form method="post" id="transaction-form">
     {% csrf_token %}
     <div class="form-group">
+        <!-- Render the form fields, keeping the pre-filled data for editing -->
         {{ form.as_p }}
     </div>
-    <button type="submit">Save</button>
+    <button type="submit">
+        {% if transaction %}
+            Save Changes
+        {% else %}
+            Save
+        {% endif %}
+    </button>
 </form>
 
 <script>
