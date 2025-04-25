@@ -1,14 +1,21 @@
-from plaid2.client import PlaidClient
-from plaid2.authenticator import PlaidAuthentication
+from plaid.api import plaid_api
+from plaid.model.link_token_create_request import LinkTokenCreateRequest
+from plaid.model.link_token_create_request_user import LinkTokenCreateRequestUser
+from plaid.model.products import Products
+from plaid.model.country_code import CountryCode
+from plaid.model.transactions_get_request import TransactionsGetRequest
+from plaid.model.item_public_token_exchange_request import ItemPublicTokenExchangeRequest
+from plaid.configuration import Configuration
+from plaid.api_client import ApiClient
 from django.conf import settings
 
-auth = PlaidAuthentication(
-    client_id='6809fa09b830b6002197b559',
-    secret='4541f61eadcb05731b4fd11e1ca927',
-    plaid_version="2020-09-14"
+configuration = Configuration(
+    host="https://sandbox.plaid.com",
+    api_key={
+        "clientId": settings.PLAID_CLIENT_ID,
+        "secret": settings.PLAID_SECRET,
+    }
 )
 
-client = PlaidClient(
-    base_url="https://sandbox.plaid.com",
-    authenticator=auth
-)
+api_client = ApiClient(configuration)
+client = plaid_api.PlaidApi(api_client)
