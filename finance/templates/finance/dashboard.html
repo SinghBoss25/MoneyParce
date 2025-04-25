@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 style="font-size: 1.8rem; color: var(--primary-color); margin-bottom: 30px;">Finance Dashboard</h2>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px;">
+    <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+        <h3 style="color: var(--primary-color); margin-bottom: 10px;">Total Budget</h3>
+        <p style="font-size: 1.5rem;">${{ total_budget }}</p>
+    </div>
+    <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+        <h3 style="color: var(--primary-color); margin-bottom: 10px;">Goals Set</h3>
+        <p style="font-size: 1.5rem;">{{ total_goals }}</p>
+    </div>
+    <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+        <h3 style="color: var(--primary-color); margin-bottom: 10px;">Avg. Goal Progress</h3>
+        <p style="font-size: 1.5rem;">{{ average_goal_progress }}%</p>
+    </div>
+</div>
+{% endblock %}

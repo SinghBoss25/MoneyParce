@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 style="font-size: 1.8rem; color: var(--primary-color); margin-bottom: 20px;">My Monthly Budgets</h2>
+
+{% for budget in budgets %}
+<div style="background-color: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 20px;">
+    <strong>{{ budget.category }}</strong> — ${{ budget.amount }}<br>
+    <span style="color: #6b7280;">For: {{ budget.month|date:"F Y" }}</span>
+
+    <!-- Action Buttons -->
+    <div style="margin-top: 12px;">
+        <a href="{% url 'edit_budget' budget.id %}" style="color: var(--accent-color); margin-right: 12px; text-decoration: none; font-weight: 500;">Edit</a>
+        <a href="{% url 'delete_budget' budget.id %}" style="color: red; text-decoration: none; font-weight: 500;">Delete</a>
+    </div>
+</div>
+{% empty %}
+<p>You haven’t added any budgets yet.</p>
+{% endfor %}
+
+<a href="{% url 'set_budget' %}" style="display: inline-block; margin-top: 20px; background: var(--accent-color); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none;">+ Add New Budget</a>
+{% endblock %}
