@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 style="font-size: 1.8rem; color: var(--primary-color); margin-bottom: 20px;">Set a Financial Goal</h2>
+
+<form method="post" style="background-color: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); max-width: 600px; margin: 0 auto;">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" style="margin-top: 20px; background: var(--accent-color); color: white; padding: 10px 20px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">Save Goal</button>
+</form>
+{% endblock %}

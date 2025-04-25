@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {% if transaction %}
+        Edit Transaction - MoneyParce
+    {% else %}
+        Add a Transaction - MoneyParce
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<h2>
+    {% if transaction %}
+        Edit Transaction
+    {% else %}
+        Add a Transaction
+    {% endif %}
+</h2>
+
+<form method="post" id="transaction-form">
+    {% csrf_token %}
+    <div class="form-group">
+        <!-- Render the form fields, keeping the pre-filled data for editing -->
+        {{ form.as_p }}
+    </div>
+    <button type="submit">
+        {% if transaction %}
+            Save Changes
+        {% else %}
+            Save
+        {% endif %}
+    </button>
+</form>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const typeRadios = document.querySelectorAll('input[name="type"]');
+    const form = document.getElementById('transaction-form');
+
+    typeRadios.forEach(radio => {
+        radio.addEventListener('change', () => {
+            form.submit();  // auto-submit when user changes income/expense
+        });
+    });
+});
+</script>
+
+
+
+<style>
+/* Increase space between form fields */
+form .form-group {
+    margin-bottom: 20px;  /* Adds space between fields */
+}
+
+form .form-group p {
+    margin-bottom: 10px;  /* Adds space below each label/input pair */
+}
+
+form button {
+    margin-top: 20px;  /* Adds space above the submit button */
+    padding: 10px 20px;  /* Add some padding to the button for a better look */
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #2563eb;
+}
+</style>
+{% endblock %}
