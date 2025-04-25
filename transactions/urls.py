@@ -11,4 +11,6 @@ urlpatterns = [
     path('plaid/create-link-token/', views.create_link_token, name='create_link_token'),
     path('plaid/exchange-token/', views.exchange_public_token, name='exchange_token'),
     path('import/', views.import_transactions, name='import_transactions'),
+    path("chat/", views.chat_view, name="chat"),
+    path("chat-api/", views.chat_api, name="chat_api"),
 ]

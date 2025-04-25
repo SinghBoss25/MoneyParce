@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+  .chat-container {
+    max-width: 800px;
+    margin: 60px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    font-family: 'Poppins', sans-serif;
+  }
+
+  h2 {
+    margin-bottom: 20px;
+    color: #1e3a8a;
+  }
+
+  .chat-box {
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    background-color: #f9fafb;
+    padding: 16px;
+    margin-bottom: 20px;
+  }
+
+  .message {
+    display: flex;
+    margin-bottom: 12px;
+  }
+
+  .message.user {
+    justify-content: flex-end;
+  }
+
+  .message.ai {
+    justify-content: flex-start;
+  }
+
+  .bubble {
+    padding: 12px 16px;
+    border-radius: 16px;
+    max-width: 70%;
+    line-height: 1.4;
+    word-wrap: break-word;
+  }
+
+  .user .bubble {
+    background-color: #3b82f6;
+    color: white;
+    border-bottom-right-radius: 0;
+  }
+
+  .ai .bubble {
+    background-color: #e5e7eb;
+    color: #111827;
+    border-bottom-left-radius: 0;
+  }
+
+  #chat-form {
+    display: flex;
+    gap: 10px;
+  }
+
+  #user-input {
+    flex-grow: 1;
+    padding: 12px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+  }
+
+  #chat-form button {
+    padding: 12px 20px;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  #chat-form button:hover {
+    background-color: #1d4ed8;
+  }
+</style>
+
+<div class="chat-container">
+  <h2>💬 Ask MoneyParce AI</h2>
+
+  <div class="chat-box" id="chat-box">
+    {% for message in messages %}
+      <div class="message {{ message.role }}">
+        <div class="bubble">
+          <strong>{{ message.role|capfirst }}:</strong> {{ message.content|safe }}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <form id="chat-form" onsubmit="sendMessage(); return false;">
+    <input type="text" id="user-input" placeholder="Ask a question..." autocomplete="off" required />
+    <button type="submit">Send</button>
+  </form>
+</div>
+
+<script>
+async function sendMessage() {
+  const inputEl = document.getElementById('user-input');
+  const input = inputEl.value.trim();
+  if (!input) return;
+
+  const chatBox = document.getElementById('chat-box');
+
+  chatBox.innerHTML += `
+    <div class="message user">
+      <div class="bubble"><strong>You:</strong> ${input}</div>
+    </div>
+  `;
+
+  chatBox.scrollTop = chatBox.scrollHeight;
+
+  const response = await fetch("{% url 'transactions:chat_api' %}", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRFToken": "{{ csrf_token }}"
+    },
+    body: JSON.stringify({ message: input })
+  });
+
+  const data = await response.json();
+
+  chatBox.innerHTML += `
+    <div class="message ai">
+      <div class="bubble"><strong>MoneyParce AI:</strong> ${data.answer}</div>
+    </div>
+  `;
+
+  inputEl.value = '';
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+</script>
+
+{% endblock %}

@@ -37,6 +37,12 @@ fetch("{% url 'transactions:create_link_token' %}")
   ⬇ Import from Plaid
 </a>
 
+<div class="d-flex justify-content-end mb-3">
+  <a href="{% url 'transactions:chat' %}" class="btn btn-outline-info">
+    💬 Ask MoneyParce AI
+  </a>
+</div>
+
 {% if transactions %}
     <table style="width: 100%; border-collapse: collapse; background-color: white; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06); border-radius: 12px; overflow: hidden;">
         <thead style="background-color: var(--primary-color); color: white;">

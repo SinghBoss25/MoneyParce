@@ -13,6 +13,9 @@ from datetime import date, timedelta
 from django.views.decorators.csrf import csrf_exempt
 from .plaid_client import client
 import json
+from openai import OpenAI
+from django.conf import settings
+from django.utils.html import format_html
 
 @login_required
 def transactions_list(request):
@@ -101,3 +104,49 @@ def import_transactions(request):
             )
 
     return redirect("transactions:list")
+
+@login_required
+def chat_view(request):
+    conversation = request.session.get("chat_messages", [])
+
+    if not conversation:
+        greeting = "Hi! I'm your MoneyParce AI assistant. Ask me anything about your finances!"
+        conversation.append({"role": "ai", "content": format_html(greeting)})
+
+    request.session["chat_messages"] = conversation
+
+    return render(request, "transactions/chat.html", {
+        "messages": conversation
+    })
+
+openai_client = OpenAI(
+    api_key=settings.TOGETHER_API_KEY,
+    base_url="https://api.together.xyz/v1"
+)
+
+@csrf_exempt
+@login_required
+def chat_api(request):
+    data = json.loads(request.body)
+    user_message = data.get("message", "")
+
+    transactions = Transaction.objects.filter(user=request.user).order_by('-date')[:50]
+    summary = "\n".join([f"{t.date}: {t.type} of ${t.amount} for {t.category.name}" for t in transactions])
+
+    prompt = f"""
+You are a helpful personal finance assistant. Here's the user's recent spending:
+
+{summary}
+
+They asked: {user_message}
+
+Give helpful advice based on their spending.
+"""
+
+    response = openai_client.chat.completions.create(
+        model="meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8",
+        messages=[{"role": "user", "content": prompt}]
+    )
+
+    ai_answer = response.choices[0].message.content
+    return JsonResponse({"answer": ai_answer})
