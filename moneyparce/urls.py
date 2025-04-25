@@ -21,8 +21,5 @@ urlpatterns = [
     path('', include('home.urls')),
     path('transactions/', include('transactions.urls')),
     path('accounts/', include('accounts.urls')),
-<<<<<<< HEAD
     path('finance/', include('finance.urls')),
-=======
->>>>>>> 8183164f24cb576a0b2b9ee903bf6cfb8bb88bd4
 ]
