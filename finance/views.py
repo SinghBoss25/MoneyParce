@@ -5,6 +5,10 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.db.models import Sum
 from datetime import date
+from django.shortcuts import render
+from transactions.models import Transaction
+from datetime import datetime
+from collections import defaultdict
 
 @login_required
 def set_budget(request):
@@ -97,3 +101,50 @@ def dashboard(request):
         'average_goal_progress': round(total_goal_progress, 2),
     }
     return render(request, 'finance/dashboard.html', context)
+
+
+
+
+def monthly_summary(request):
+    user = request.user
+    month = request.GET.get('month')
+    year = request.GET.get('year')
+
+    if not month or not year:
+        now = datetime.now()
+        month = now.month
+        year = now.year
+
+    transactions = Transaction.objects.filter(
+        user=user,
+        date__year=year,
+        date__month=month
+    )
+
+    income_total = 0
+    expense_total = 0
+    category_totals = defaultdict(float)
+
+    for t in transactions:
+        if "income" in t.type.lower():
+            income_total += float(t.amount)
+        elif "expense" in t.type.lower():
+            expense_total += float(t.amount)
+            category_totals[str(t.category)] += float(t.amount)
+
+    net_savings = income_total - expense_total
+    if not category_totals:
+        category_totals = {"No Data": 1}
+
+
+    context = {
+        'income': float(income_total),
+        'expenses': float(expense_total),
+        'net_savings': float(net_savings),
+        'category_totals': dict(category_totals),
+        'selected_month': month,
+        'selected_year': year,
+    }
+
+
+    return render(request, 'finance/monthly_summary.html', context)

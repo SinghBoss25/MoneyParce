@@ -11,4 +11,5 @@ urlpatterns = [
     path('edit-goal/<int:goal_id>/', views.edit_goal, name='edit_goal'),
     path('delete-goal/<int:goal_id>/', views.delete_goal, name='delete_goal'),
     path('dashboard/', views.dashboard, name='finance_dashboard'),
+    path('summary/', views.monthly_summary, name='monthly_summary'),
 ]
