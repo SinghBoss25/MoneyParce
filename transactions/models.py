@@ -12,7 +12,7 @@ class Category(models.Model):
     type = models.CharField(max_length=7, choices=CATEGORY_TYPES)
 
     def __str__(self):
-        return f"{self.name} ({self.type})"
+        return f"{self.name}"
 
 
 class Transaction(models.Model):
