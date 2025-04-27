@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'home',
     'transactions',
     'accounts',
-    'finance'
+    'finance',
+    'markdownify',
 ]
 
 MIDDLEWARE = [

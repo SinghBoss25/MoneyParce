@@ -147,6 +147,5 @@ Give helpful advice based on their spending.
         model="meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8",
         messages=[{"role": "user", "content": prompt}]
     )
-
     ai_answer = response.choices[0].message.content
     return JsonResponse({"answer": ai_answer})

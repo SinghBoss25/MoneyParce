@@ -89,13 +89,13 @@
 </style>
 
 <div class="chat-container">
-  <h2>💬 Ask MoneyParce AI</h2>
+  <h2>Ask MoneyParce AI</h2>
 
   <div class="chat-box" id="chat-box">
     {% for message in messages %}
       <div class="message {{ message.role }}">
         <div class="bubble">
-          <strong>{{ message.role|capfirst }}:</strong> {{ message.content|safe }}
+          <strong>MoneyParce AI:</strong> {{ message.content }}
         </div>
       </div>
     {% endfor %}
@@ -114,6 +114,8 @@ async function sendMessage() {
   if (!input) return;
 
   const chatBox = document.getElementById('chat-box');
+
+  inputEl.value = '';
 
   chatBox.innerHTML += `
     <div class="message user">
@@ -136,7 +138,7 @@ async function sendMessage() {
 
   chatBox.innerHTML += `
     <div class="message ai">
-      <div class="bubble"><strong>MoneyParce AI:</strong> ${data.answer}</div>
+      <div class="bubble"><strong>MoneyParce AI:</strong> ${data.answer.replace(/\n/g, '<br>')}</div>
     </div>
   `;
 
