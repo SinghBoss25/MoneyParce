@@ -45,7 +45,6 @@ def add_transaction(request, transaction_id=None):
     if request.method == 'POST' and form.is_valid():
         transaction = form.save(commit=False)
         if not transaction_id:
-            # Only assign user on create, not on edit (already has a user)
             transaction.user = request.user
         transaction.save()
         return redirect('transactions:list')

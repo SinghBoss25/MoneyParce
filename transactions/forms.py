@@ -13,6 +13,11 @@ class TransactionForm(forms.ModelForm):
 
         self.fields['category'].queryset = Category.objects.none()
 
+        self.fields['amount'].widget.attrs.update({
+            'placeholder': 'Enter amount',
+            'onfocus': "if(this.value=='0.00')this.value='';"
+        })
+
         if 'type' in self.data:
             selected_type = self.data.get('type')
             self.fields['category'].queryset = Category.objects.filter(type=selected_type)
