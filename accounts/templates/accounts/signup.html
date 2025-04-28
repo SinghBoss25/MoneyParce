@@ -1,24 +1,109 @@
 {% extends 'base.html' %}
+
 {% block content %}
-<div class="p-3 mt-4">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-8">
-        <div class="card shadow p-3 mb-4 rounded">
-          <div class="card-body">
-            <h2>Sign Up</h2>
-            <hr />
-            <form method="POST">
-              {% csrf_token %}
-              {{ template_data.form.as_p }}
-              <button type="submit"
-                class="btn bg-dark text-white">Sign Up
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+<style>
+  .signup-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 20px;
+    min-height: 80vh;
+  }
+
+  .signup-card {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+  }
+
+  .signup-card h2 {
+    font-size: 2rem;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+
+  .signup-card hr {
+    margin-top: 8px;
+    margin-bottom: 24px;
+    border-top: 2px solid var(--primary-color);
+    width: 100%;
+  }
+
+  .signup-card form p {
+    margin-bottom: 24px;
+  }
+
+  .signup-card label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+
+  .signup-card input {
+    width: 100%;
+    padding: 14px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+
+  .signup-card button {
+    margin-top: 20px;
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+  }
+
+  .signup-card button:hover {
+    background-color: #0d6efd;
+  }
+
+  /* Responsive */
+  @media (max-width: 576px) {
+    .signup-container {
+      padding: 30px 10px;
+    }
+
+    .signup-card {
+      padding: 30px 20px;
+    }
+
+    .signup-card h2 {
+      font-size: 1.75rem;
+    }
+
+    .signup-card input {
+      padding: 12px;
+      font-size: 0.95rem;
+    }
+
+    .signup-card button {
+      padding: 10px;
+      font-size: 1rem;
+    }
+  }
+</style>
+
+<div class="signup-container">
+  <div class="signup-card">
+    <h2>Sign Up</h2>
+    <hr />
+    <form method="POST">
+      {% csrf_token %}
+      {{ template_data.form.as_p }}
+      <button type="submit">Sign Up</button>
+    </form>
   </div>
 </div>
 {% endblock content %}

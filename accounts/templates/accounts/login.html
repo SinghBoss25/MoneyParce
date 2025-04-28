@@ -1,41 +1,106 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="p-3 mt-4">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-8">
-        <div class="card shadow p-3 mb-4 rounded">
-          <div class="card-body">
-            <h2>Login</h2>
-            <hr />
-            {% if template_data.error %}
-            <div class="alert alert-danger" role="alert">
-              {{ template_data.error }}
-            </div>
-            {% endif %}
-            <form method="POST">
-              {% csrf_token %}
-              <p>
-                <label for="username">Username</label>
-                <input id="username" type="text" name="username" required
-                  autocomplete="username" class="form-control">
-              </p>
-              <p>
-                <label for="password">Password</label>
-                <input id="password" type="password" name="password" required
-                  autocomplete="current-password" class="form-control">
-              </p>
-              <div class="text-center">
-                <button type="submit" class="btn bg-dark text-white">
-                  Login
-                </button>
-              </div>
-            </form>
-            <a href="{% url 'password_reset' %}">Forgot Password?</a>
-          </div>
-        </div>
-      </div>
+<style>
+  body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8f9fa;
+  }
+  .login-card {
+    max-width: 420px;
+    margin: 80px auto;
+    padding: 40px 30px;
+    border-radius: 14px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    background-color: white;
+  }
+  .login-card h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: 700;
+    color: var(--primary-color);
+  }
+  .form-control {
+    font-size: 1.1rem;
+    padding: 14px 16px;
+    border-radius: 10px;
+  }
+  .login-card .form-label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 1rem;
+  }
+  .form-group {
+    margin-bottom: 30px;
+  }
+  .login-card .btn {
+    width: 100%;
+    font-weight: 600;
+    padding: 14px;
+    font-size: 1.1rem;
+    margin-top: 10px;
+    border-radius: 10px;
+  }
+  .forgot-password {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.95rem;
+    color: #0d6efd;
+    text-decoration: none;
+  }
+  .login-card hr {
+    margin-top: 8px;
+    margin-bottom: 24px;
+    border-top: 2px solid var(--primary-color);
+    width: 100%
+  }
+  .forgot-password:hover {
+    text-decoration: underline;
+  }
+
+  /* makes it responsive */
+  @media (max-width: 576px) {
+    .login-card {
+      padding: 30px 20px;
+      margin: 60px 16px;
+    }
+    .form-control {
+      font-size: 1rem;
+      padding: 12px 14px;
+    }
+    .login-card h2 {
+      font-size: 1.8rem;
+    }
+    .login-card .btn {
+      font-size: 1rem;
+    }
+  }
+</style>
+
+<div class="container">
+  <div class="login-card">
+    <h2>Login</h2>
+    <hr />
+    {% if template_data.error %}
+    <div class="alert alert-danger" role="alert">
+      {{ template_data.error }}
     </div>
+    {% endif %}
+    <form method="POST">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="username" class="form-label">Username</label>
+        <input id="username" type="text" name="username" required autocomplete="username" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="password" class="form-label">Password</label>
+        <input id="password" type="password" name="password" required autocomplete="current-password" class="form-control">
+      </div>
+      <div class="d-grid">
+        <button type="submit" class="btn bg-dark text-white">Login</button>
+      </div>
+    </form>
+    <a href="{% url 'password_reset' %}" class="forgot-password">Forgot Password?</a>
   </div>
 </div>
 {% endblock content %}
