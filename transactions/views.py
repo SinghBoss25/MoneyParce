@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .forms import TransactionForm
 from .models import Transaction, Category
+from django.db import models
 from django.http import JsonResponse
 from plaid.model.link_token_create_request import LinkTokenCreateRequest
 from plaid.model.link_token_create_request_user import LinkTokenCreateRequestUser
@@ -17,10 +18,20 @@ from openai import OpenAI
 from django.conf import settings
 from django.utils.html import format_html
 
-@login_required
+
 def transactions_list(request):
-    transactions = Transaction.objects.filter(user=request.user).order_by('-date', '-id')
-    return render(request, 'transactions/list.html', {'transactions': transactions})
+    transactions = Transaction.objects.filter(user=request.user)
+
+    total_income = transactions.filter(type='income').aggregate(total=models.Sum('amount'))['total'] or 0
+    total_expenses = transactions.filter(type='expense').aggregate(total=models.Sum('amount'))['total'] or 0
+    net_total = total_income - total_expenses
+
+    return render(request, 'transactions/list.html', {
+        'transactions': transactions,
+        'total_income': total_income,
+        'total_expenses': total_expenses,
+        'net_total': net_total,
+    })
 
 @login_required
 def add_transaction(request, transaction_id=None):
