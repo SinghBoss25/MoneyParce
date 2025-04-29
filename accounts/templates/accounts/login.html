@@ -1,45 +1,75 @@
 {% extends 'base.html' %}
 {% block content %}
 <style>
-  body {
-    font-family: 'Roboto', sans-serif;
+  .auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 20px;
+    min-height: 80vh;
     background-color: #f8f9fa;
   }
-  .login-card {
-    max-width: 420px;
-    margin: 80px auto;
-    padding: 40px 30px;
-    border-radius: 14px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-    background-color: white;
+
+  .auth-card {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
   }
-  .login-card h2 {
+
+  .auth-card h2 {
+    font-size: 2rem;
     text-align: center;
-    margin-bottom: 30px;
-    font-weight: 700;
+    font-weight: bold;
+    margin-bottom: 8px;
     color: var(--primary-color);
   }
-  .form-control {
-    font-size: 1.1rem;
-    padding: 14px 16px;
-    border-radius: 10px;
+
+  .auth-card hr {
+    margin-top: 8px;
+    margin-bottom: 24px;
+    border-top: 2px solid var(--primary-color);
+    width: 100%;
   }
-  .login-card .form-label {
-    font-weight: 600;
+
+  .form-group {
+    margin-bottom: 24px;
+  }
+
+  .form-label {
+    display: block;
     margin-bottom: 8px;
+    font-weight: 600;
     font-size: 1rem;
   }
-  .form-group {
-    margin-bottom: 30px;
-  }
-  .login-card .btn {
+
+  .form-control {
     width: 100%;
-    font-weight: 600;
     padding: 14px;
-    font-size: 1.1rem;
-    margin-top: 10px;
-    border-radius: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
   }
+
+  .auth-card button {
+    margin-top: 20px;
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+  }
+
+  .auth-card button:hover {
+    background-color: #0d6efd;
+  }
+
   .forgot-password {
     display: block;
     text-align: center;
@@ -48,37 +78,38 @@
     color: #0d6efd;
     text-decoration: none;
   }
-  .login-card hr {
-    margin-top: 8px;
-    margin-bottom: 24px;
-    border-top: 2px solid var(--primary-color);
-    width: 100%
-  }
+
   .forgot-password:hover {
     text-decoration: underline;
   }
 
-  /* makes it responsive */
   @media (max-width: 576px) {
-    .login-card {
+    .auth-container {
+      padding: 30px 10px;
+    }
+
+    .auth-card {
       padding: 30px 20px;
-      margin: 60px 16px;
     }
+
+    .auth-card h2 {
+      font-size: 1.75rem;
+    }
+
     .form-control {
-      font-size: 1rem;
-      padding: 12px 14px;
+      padding: 12px;
+      font-size: 0.95rem;
     }
-    .login-card h2 {
-      font-size: 1.8rem;
-    }
-    .login-card .btn {
+
+    .auth-card button {
+      padding: 10px;
       font-size: 1rem;
     }
   }
 </style>
 
-<div class="container">
-  <div class="login-card">
+<div class="auth-container">
+  <div class="auth-card">
     <h2>Login</h2>
     <hr />
     {% if template_data.error %}
@@ -96,9 +127,7 @@
         <label for="password" class="form-label">Password</label>
         <input id="password" type="password" name="password" required autocomplete="current-password" class="form-control">
       </div>
-      <div class="d-grid">
-        <button type="submit" class="btn bg-dark text-white">Login</button>
-      </div>
+      <button type="submit">Login</button>
     </form>
     <a href="{% url 'password_reset' %}" class="forgot-password">Forgot Password?</a>
   </div>

@@ -5,9 +5,13 @@
 
 {% for budget in budgets %}
 <div style="background-color: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 20px;">
-    <strong>{{ budget.category }}</strong> — ${{ budget.amount }} ({{ budget.progress|floatformat:0 }}%)<br>
+    <strong>{{ budget.category }}</strong> — ${{ budget.total|floatformat:2 }} / ${{ budget.amount }} ({{ budget.progress|floatformat:0 }}%)<br>
     <div style="background: #ddd; height: 16px; width: 100%; border-radius: 8px; overflow: hidden; margin-top: 8px;">
-        <div style="background: var(--accent-color); width: {{ budget.progress|floatformat:0 }}%; height: 100%;"></div>
+        <div style="
+            background: {% if budget.progress >= 90 %}crimson{% else %}var(--accent-color){% endif %};
+            width: {{ budget.progress|floatformat:0 }}%;
+            height: 100%;
+        "></div>
     </div>
     <span style="color: #6b7280;">For: {{ budget.month|date:"F Y" }}</span>
 

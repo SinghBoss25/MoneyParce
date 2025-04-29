@@ -27,7 +27,7 @@ class Transaction(models.Model):
     type = models.CharField(max_length=7, choices=TRANSACTION_TYPES)
     amount = EncryptedCharField(max_length=50, default='0.00')  # store amount as encrypted string
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
-    date = EncryptedDateField()
+    date = models.DateField(auto_now_add=True)
     description = EncryptedCharField(max_length=255, blank=True)
 
     def clean(self):

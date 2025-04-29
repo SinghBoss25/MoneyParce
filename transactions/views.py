@@ -17,13 +17,15 @@ import json
 from openai import OpenAI
 from django.conf import settings
 from django.utils.html import format_html
+from decimal import Decimal
+
 
 
 def transactions_list(request):
     transactions = Transaction.objects.filter(user=request.user)
 
-    total_income = transactions.filter(type='income').aggregate(total=models.Sum('amount'))['total'] or 0
-    total_expenses = transactions.filter(type='expense').aggregate(total=models.Sum('amount'))['total'] or 0
+    total_income = sum(Decimal(t.amount) for t in transactions if t.type == 'income') or 0
+    total_expenses = sum(Decimal(t.amount) for t in transactions if t.type == 'expense') or 0
     net_total = total_income - total_expenses
 
     return render(request, 'transactions/list.html', {
