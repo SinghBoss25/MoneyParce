@@ -109,6 +109,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+FIELD_ENCRYPTION_KEY = 'PEhNwQwtOOYmeW148RwfHJ2vMonJEOMZSpzQBoILrdQ='
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/

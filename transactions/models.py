@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from decimal import Decimal
+from encrypted_model_fields.fields import EncryptedCharField, EncryptedDateField
+from django.utils import timezone
 
 class Category(models.Model):
     CATEGORY_TYPES = (
@@ -23,24 +25,26 @@ class Transaction(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     type = models.CharField(max_length=7, choices=TRANSACTION_TYPES)
-    amount = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
+    amount = EncryptedCharField(max_length=50, default='0.00')  # store amount as encrypted string
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
-    date = models.DateField(auto_now_add=True)
-    description = models.CharField(max_length=255, blank=True)
+    date = EncryptedDateField()
+    description = EncryptedCharField(max_length=255, blank=True)
 
     def clean(self):
-        # Ensure that amount is positive
-        if self.amount <= 0:
+        # Convert amount string to Decimal for validation
+        if Decimal(self.amount) <= 0:
             raise ValidationError({'amount': 'Amount must be a positive value.'})
 
+    def save(self, *args, **kwargs):
+        if not self.date:
+            self.date = timezone.now().date()
+        super().save(*args, **kwargs)
+
     def __str__(self):
-        # Use a single "-" for expenses, and "+" for income
         sign = '+'
-        if (self.type == 'expense'):
+        if self.type == 'expense':
             sign = '-'
 
+        # Format nicely
         return f"{self.type.capitalize()} - {self.category.name} - {sign}${self.amount}"
-
-
-
 
