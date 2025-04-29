@@ -27,7 +27,7 @@ class Budget(models.Model):
         if progress >= 90 and not self.notified:
             # Send email
             send_mail(
-                subject='MoneyParce Budget Alert!',
+                subject='⚡ MoneyParce Budget Alert!',
                 message=f'You have spent {progress:.0f}% of your budget for {self.category.name}!\nYou are approaching your monthly limit so please spend carefully.',
                 from_email=None,  # uses DEFAULT_FROM_EMAIL
                 recipient_list=[self.user.email],
