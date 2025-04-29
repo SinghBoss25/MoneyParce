@@ -120,7 +120,6 @@ soupsieve==2.6
 sqlparse==0.5.3
 stack-data==0.6.3
 sympy==1.13.1
-terminado==0.18.1
 torch==2.6.0+cpu
 tornado==6.4.2
 tqdm==4.67.1
