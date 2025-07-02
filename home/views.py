@@ -2,8 +2,9 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 
-# Create your views here.
-def index(request):
+# Renders the main home page and the about page. Also includes a view
+# that redirects the user to their transaction list if they are logged in,
+# or to the signup page if they are a new visitor.def index(request):
     return render(request, 'home/index.html')
 def about(request):
     return render(request, 'about.html')
